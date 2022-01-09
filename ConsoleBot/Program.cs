@@ -40,6 +40,11 @@ namespace ConsoleBot
                 {
                     await anna.SimulateDots();
                     anna.Reply("Hva heter du, da?");
+                    Console.Write("User: ");
+                    string userInput = Console.ReadLine();
+                    await anna.SimulateDots();
+                    anna.Reply("Heisann, " + userInput + ". Hyggelig å hilse på deg!");
+                    await anna.Answer();
                     break;
                 }
                 default:
