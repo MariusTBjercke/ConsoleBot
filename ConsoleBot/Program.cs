@@ -8,34 +8,46 @@ namespace ConsoleBot
     internal class Program
     {
 
-        static Bot anna = new Bot("Anna");
+        public static Bot anna = new Bot("Anna");
 
         static async Task Main(string[] args)
         {
-
             WelcomeMessage();
             await First();
         }
 
         public static void WelcomeMessage()
         {
-            Console.WriteLine(anna.Name + ": Velkommen!");
-            Console.WriteLine(anna.Name + ": Spør meg om hva som helst ved å skrive inn noe nedenfor.");
+            anna.Reply("Velkommen!");
+            anna.Reply("Spør meg om hva som helst ved å skrive inn noe nedenfor.");
         }
 
         public static async Task First()
         {
-            List<string> userInputs = new List<string>();
-            List<string> botAnswers = new List<string>();
-
-            UserAndBotArrayValues(userInputs, botAnswers);
-
-            await anna.Answer(userInputs, botAnswers);
+            await anna.Answer();
         }
         
-        public static void Second()
+        public static async Task Second(string condition)
         {
-
+            switch (condition)
+            {
+                case "hva med deg":
+                {
+                    anna.Reply("Hva med deg?");
+                    break;
+                }
+                case "hva heter du":
+                {
+                    await anna.SimulateDots();
+                    anna.Reply("Hva heter du, da?");
+                    break;
+                }
+                default:
+                {
+                    break;
+                }
+            }
+            await anna.Answer();
         }
         
         public static void Third()
@@ -54,7 +66,7 @@ namespace ConsoleBot
             // Bot
             botAnswers.Add("Hallois!");
             botAnswers.Add("Bare bra. Hva med deg?");
-            botAnswers.Add("Boten Anna, Anna heter jeg.");
+            botAnswers.Add("Boten Anna, Anna heter jag.");
             botAnswers.Add("Nej, jag er en bot.");
         }
 

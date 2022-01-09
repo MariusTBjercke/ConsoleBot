@@ -8,54 +8,71 @@ namespace ConsoleBot
     public class Bot
     {
 
-        public string Name;
+        static string Name;
 
         public Bot(string name)
         {
             Name = name;
         }
 
-        public async Task Answer(List<string> inputs, List<string> answers)
+        public async Task Answer()
         {
-
             Console.Write("User: ");
-            var userText = Console.ReadLine().ToLower();
+
+            // Convert to lowercase and remove question marks
+            var userInput = Console.ReadLine().ToLower().Replace("?", "");
 
             // Wait for bot to answer
             await SimulateDots();
 
-            bool success = true;
-
-            for (int i = 0; i < inputs.Count; i++) // Count == Lister | Length == Arrays.
+            switch (userInput)
             {
-                var input = inputs[i].ToLower();
-                if (Regex.Match(userText, @"\b" + input + @"\b", RegexOptions.IgnoreCase).Success)
+                case "hei":
+                case "hallo":
+                case "hallois":
                 {
-
-                    Console.Write("Bot: ");
-                    Console.WriteLine(answers[i]);
-
-                    success = true;
+                    Reply("Hei på deg!");
                     break;
                 }
-                else
+                case "hvordan går det":
+                case "hvordan har du det":
+                case "står det bra til":
                 {
-                    success = false;
+                    Reply("Her går det bare fint!");
+                    await Program.Second("hva med deg");
+                    break;
+                }
+                case "hvem er du":
+                case "hva heter du":
+                case "hva er ditt navn":
+                {
+                    Reply("Boten Anna, Anna heter jag.");
+                    await Program.Second("hva heter du");
+                        break;
+                }
+                case "er du en båt":
+                case "er du et fly":
+                case "er du et menneske":
+                case "er du en person":
+                {
+                    Reply("Nej, jag är en bot.");
+                    break;
+                }
+                default:
+                {
+                    Reply("Jeg forstod ikke spørsmålet ditt, vennligst prøv igjen.");
+                    await Answer();
+                    break;
                 }
             }
-
-            if (!success)
-            {
-                Console.Write("Bot: ");
-                Console.WriteLine("Hmm...");
-
-            }
-
-            await Answer(inputs, answers);
-
         }
 
-        public static async Task SimulateDots()
+        public void Reply(string reply)
+        {
+            Console.WriteLine(Name + ": " + reply);
+        }
+
+        public async Task SimulateDots()
         {
             string dots = "...";
 
