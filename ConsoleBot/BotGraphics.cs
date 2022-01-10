@@ -6,13 +6,13 @@ using System.Threading.Tasks;
 
 namespace ConsoleBot
 {
-    internal class Graphics
+    internal class BotGraphics
     {
 
         private static int origRow = Console.CursorTop;
         private static int origCol = Console.CursorLeft;
 
-        private static void DrawRectangle()
+        public void DrawRectangle()
         {
             Console.Clear();
 
@@ -45,7 +45,7 @@ namespace ConsoleBot
             Console.WriteLine();
         }
 
-        public static void WriteAt(string s, int x, int y)
+        public void WriteAt(string s, int x, int y)
         {
             try
             {
@@ -60,7 +60,7 @@ namespace ConsoleBot
             }
         }
 
-        public static void DrawRec(int XTop, int YTop, int XBot, int YBot, ConsoleColor Color)
+        public void DrawRec(int XTop, int YTop, int XBot, int YBot, ConsoleColor Color)
         {
             for (int y = YTop; y < YBot; y++)
             {
@@ -71,7 +71,7 @@ namespace ConsoleBot
             }
         }
 
-        private static void Draw(int x, int y, ConsoleColor color)
+        public void Draw(int x, int y, ConsoleColor color)
         {
             Console.SetCursorPosition(x, y);
             Console.BackgroundColor = color;

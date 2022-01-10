@@ -30,6 +30,8 @@ namespace ConsoleBot
                 case "hei":
                 case "hallo":
                 case "hallois":
+                case "hi":
+               
                 {
                     Reply("Hei på deg!");
                     break;
