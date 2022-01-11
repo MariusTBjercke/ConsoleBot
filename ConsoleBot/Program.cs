@@ -1,7 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
+using System.Threading;
 using System.Threading.Tasks;
+using System.Timers;
+using Timer = System.Timers.Timer;
 
 namespace ConsoleBot
 {
@@ -9,15 +10,47 @@ namespace ConsoleBot
     {
 
         public static Bot anna = new Bot("Anna");
-
         static BotGraphics botGraphics = new BotGraphics();
+        public static Timer aTimer = new System.Timers.Timer();
 
         static async Task Main(string[] args)
         {
             await RunPreload();
-
-            //await First();
+            StartHintsInBg();
+            await First();
         }
+
+        private static void StartHintsInBg()
+        {
+            aTimer.Interval = 2000;
+            aTimer.Elapsed += ShowHints;
+            aTimer.AutoReset = true;
+            aTimer.Enabled = true;
+        }
+
+        static async void ShowHints(object sender, ElapsedEventArgs e)
+        {
+            await anna.BotHints();
+            aTimer.Enabled = false;
+        }
+
+        //Sytem.Timers.Timer();
+        
+        // Create a timer and set a two second interval.
+        //aTimer = new System.Timers.Timer();
+        //aTimer.Interval = 2000;
+
+        //// Hook up the Elapsed event for the timer. 
+        //aTimer.Elapsed += OnTimedEvent;
+
+        //// Have the timer fire repeated events (true is the default)
+        //aTimer.AutoReset = true;
+
+        //// Start the timer
+        //aTimer.Enabled = true;
+
+        //Console.WriteLine("Press the Enter key to exit the program at any time... ");
+        //Console.ReadLine();
 
         private static async Task RunPreload()
         {
@@ -27,7 +60,7 @@ namespace ConsoleBot
        ##    ##       ## ##   ##  ## ##   ##       ##    ##
       ##      ##      ##  ##  ##  ##  ##  ##      ##      ##
      ############     ##   ## ##  ##   ## ##     ############
-    ##          ##    ##    ####  ##    ####    ##          ##
+    ##############    ##    ####  ##    ####    ##############
    ##            ##   ##     ###  ##     ###   ##            ##
   ##              ##  ##      ##  ##      ##  ##              ##
 
@@ -69,14 +102,14 @@ namespace ConsoleBot
 
             foreach (var x in annaArray)
             {
-                if (x == ' ')
+                if (x == '#')
                 {
-                    Console.BackgroundColor = bgColor;
+                    Console.BackgroundColor = ConsoleColor.Black;
                     Console.Write(x);
                 }
                 else
                 {
-                    Console.BackgroundColor = ConsoleColor.DarkMagenta;
+                    Console.BackgroundColor = bgColor;
                     Console.Write(x);
                 }
             }
@@ -130,9 +163,15 @@ namespace ConsoleBot
             await anna.Answer();
         }
         
-        public static void Third()
+        public static void Third(string condition)
         {
-
+            switch (condition)
+            {
+                case "":
+                {
+                    break;
+                }
+            }
         }
 
     }

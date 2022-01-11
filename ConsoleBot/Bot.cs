@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
@@ -21,6 +22,9 @@ namespace ConsoleBot
 
             // Convert to lowercase and remove question marks
             var userInput = Console.ReadLine().ToLower().Replace("?", "");
+            
+            Program.aTimer.Stop();
+            Program.aTimer.Start();
 
             // Wait for bot to answer
             await SimulateDots();
@@ -56,6 +60,7 @@ namespace ConsoleBot
                 case "er du et fly":
                 case "er du et menneske":
                 case "er du en person":
+                case "hva er du":
                 {
                     Reply("Nej, jag är en bot.");
                     break;
@@ -66,6 +71,27 @@ namespace ConsoleBot
                     await Answer();
                     break;
                 }
+            }
+        }
+
+        // Etter x antall sekunder(Task.Delay), skriv "hint" for å få hint.
+        public async Task BotHints()
+        {
+            var rnd = new Random();
+            var questionHints = new List<string>();
+            questionHints.Add("Spør meg hva jeg heter.");
+            questionHints.Add("Si hei!");
+            questionHints.Add("Spør hva jeg er.");
+
+            Console.WriteLine(Environment.NewLine);
+            Reply("Hint til hva vi kan snakke om:");
+
+            // Kan bruke Fisher-Yates shuffle
+            var shuffled = questionHints.OrderBy(x => rnd.Next());
+
+            foreach (var hint in shuffled)
+            {
+                Console.WriteLine("- " + hint);
             }
         }
 
